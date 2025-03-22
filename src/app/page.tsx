@@ -8,6 +8,7 @@ import { Metadata } from "next";
 import { FilterBar } from "../components/FilterBar";
 import { FullWidthHeader } from "../components/FullWidthHeader";
 import { config } from "../config";
+import Link from "next/link";
 
 const { title, description } = config;
 
@@ -21,11 +22,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page(
-  props: {
-    searchParams?: Promise<{ query: string; page: string }>;
-  }
-) {
+export default async function Page(props: {
+  searchParams?: Promise<{ query: string; page: string }>;
+}) {
   const searchParams = await props.searchParams;
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
   const result = await wisp.getPosts({
@@ -37,6 +36,15 @@ export default async function Page(
   return (
     <>
       <FullWidthHeader title={title} description={description} />
+
+      <div className="container mx-auto max-w-6xl mt-4 text-center">
+        <Link href="/landing-page" passHref>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            Landing page
+          </button>
+        </Link>
+      </div>
+
       <div className="container mx-auto max-w-6xl">
         <FilterBar active="latest" className="my-8" />
         <BlogPostList posts={result.posts} />

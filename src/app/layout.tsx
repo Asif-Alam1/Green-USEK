@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/Navbar";
 import { Providers } from "./providers";
 
 const fontSans = IBM_Plex_Sans({
@@ -22,9 +23,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${fontSans.variable} antialiased font-sans`}>
+      <body
+        className={`${fontSans.variable}  antialiased font-sans flex flex-col`}
+      >
         <Providers>
-          {children}
+          <Navbar />
+          <div className="">{children}</div>
           <Footer />
         </Providers>
       </body>
