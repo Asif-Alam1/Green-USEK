@@ -7,8 +7,15 @@ import { useEffect, useRef, useState } from "react";
 import { config } from "../config";
 import { cn } from "../lib/utils";
 import Link from "next/link";
+import { wisp } from "@/lib/wisp";
+import { useQuery } from "@tanstack/react-query";
 
-const categories = [{ label: "Latest", tag: "latest" }, ...config.categories];
+export interface Tag {
+  id: string;
+  name: string;
+  description: string | null;
+  teamId: string;
+}
 
 export interface BlogNavigationBarProps {
   className?: string;
@@ -25,6 +32,21 @@ export const FilterBar = ({ className, active }: BlogNavigationBarProps) => {
   );
   const searchInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  // Fetch tags from Wisp CMS
+  const { data: tagsData, isLoading } = useQuery({
+    queryKey: ["tags"],
+    queryFn: async () => {
+      const tagResult = await wisp.getTags({ limit: "all" });
+      return tagResult.tags;
+    },
+  });
+
+  // Combine the "Latest" category with the fetched tags
+  const categories = [
+    { label: "Latest", tag: "latest" },
+    ...(tagsData?.map(tag => ({ label: tag.name, tag: tag.name })) || [])
+  ];
 
   useEffect(() => {
     if (isSearchActive) {
@@ -76,25 +98,29 @@ export const FilterBar = ({ className, active }: BlogNavigationBarProps) => {
         </div>
       ) : (
         <div className="flex w-full items-center justify-between">
-          <div className="flex gap-2 whitespace-nowrap  overflow-x-auto">
-            {categories.map((category) => (
-              <Link
-                href={
-                  category.tag === "latest" ? `/` : `/category/${category.tag}`
-                }
-                key={category.tag}
-              >
-                <button
-                  className={cn(
-                    "py-1 px-2",
-                    active === category.tag &&
-                      "border-b-2 border-black font-semibold"
-                  )}
+          <div className="flex gap-2 whitespace-nowrap overflow-x-auto">
+            {isLoading ? (
+              <div className="py-1 px-2">Loading categories...</div>
+            ) : (
+              categories.map((category) => (
+                <Link
+                  href={
+                    category.tag === "latest" ? `/` : `/category/${category.tag}`
+                  }
+                  key={category.tag}
                 >
-                  {category.label}
-                </button>
-              </Link>
-            ))}
+                  <button
+                    className={cn(
+                      "py-1 px-2",
+                      active === category.tag &&
+                        "border-b-2 border-black font-semibold"
+                    )}
+                  >
+                    {category.label}
+                  </button>
+                </Link>
+              ))
+            )}
           </div>
           <div className="flex-shrink-0">
             <button onClick={() => setIsSearchActive(true)}>
