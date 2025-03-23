@@ -58,11 +58,8 @@ export default async function Page(props: {
   }
 
   return (
-    <main>
-      <FullWidthHeader title={title} description={description} />
-
-
-      <div className="container mx-auto max-w-6xl">
+    <div>
+      <div className="mt-5 mx-auto max-w-6xl">
         <FilterBar active="latest" className="my-8" />
 
         {/* Featured Post Section */}
@@ -196,6 +193,6 @@ export default async function Page(props: {
 
 
       </div>
-    </main>
+    </div>
   );
 }
