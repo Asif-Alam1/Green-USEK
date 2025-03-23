@@ -43,14 +43,19 @@ const BreadcrumbLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithoutRef<"a"> & {
     asChild?: boolean
+    showOnMobile?: boolean;
   }
->(({ asChild, className, ...props }, ref) => {
+>(({ asChild, className,showOnMobile = true, ...props }, ref) => {
   const Comp = asChild ? Slot : "a"
 
   return (
     <Comp
       ref={ref}
-      className={cn("transition-colors hover:text-foreground", className)}
+      className={cn(
+        "transition-colors duration-200 hover:text-foreground hover:underline-offset-4 hover:underline focus:underline focus:outline-none",
+        !showOnMobile && "hidden sm:inline-flex",
+        className
+      )}
       {...props}
     />
   )
@@ -80,7 +85,7 @@ const BreadcrumbSeparator = ({
   <li
     role="presentation"
     aria-hidden="true"
-    className={cn("[&>svg]:size-3.5", className)}
+    className={cn("text-muted-foreground/70 [&>svg]:size-3.5", className)}
     {...props}
   >
     {children ?? <ChevronRight />}

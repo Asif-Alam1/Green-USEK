@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
-import { Shield } from "lucide-react";
+import { Shield, Send, Loader2, User, Mail, Link as LinkIcon, MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { wisp } from "../lib/wisp";
@@ -60,9 +60,9 @@ interface CreateCommentRequest {
   parentId?: string;
 }
 
-export function CommentForm({ slug, config, onSuccess }: CommentFormProps) {
+export function CommentForm({ slug, config, parentId, onSuccess }: CommentFormProps) {
   const { toast } = useToast();
-  const { mutateAsync: createComment, data } = useMutation({
+  const { mutateAsync: createComment, data, isLoading } = useMutation({
     mutationFn: async (input: CreateCommentRequest) => {
       try {
         return await wisp.createComment(input);
@@ -94,6 +94,7 @@ export function CommentForm({ slug, config, onSuccess }: CommentFormProps) {
       await createComment({
         ...values,
         slug,
+        parentId,
       });
       if (onSuccess) {
         onSuccess();
@@ -102,7 +103,7 @@ export function CommentForm({ slug, config, onSuccess }: CommentFormProps) {
     } catch (e) {
       if (e instanceof Error) {
         toast({
-          title: "Error",
+          title: "Error posting comment",
           description: e.message,
           variant: "destructive",
         });
@@ -112,14 +113,13 @@ export function CommentForm({ slug, config, onSuccess }: CommentFormProps) {
 
   if (data && data.success) {
     return (
-      <Alert className="bg-muted border-none">
-        <AlertDescription className="space-y-2 text-center">
-          <Shield className="text-muted-foreground mx-auto h-10 w-10" />
-          <div className="font-medium">Pending email verification</div>
-          <div className="text-muted-foreground m-auto max-w-lg text-balance text-sm">
-            Thanks for your comment! Please check your email to verify your
-            email and post your comment. If you don&apos;t see it in your inbox,
-            please check your spam folder.
+      <Alert className="bg-primary/5 border-primary/20">
+        <AlertDescription className="space-y-4 text-center">
+          <Shield className="text-primary mx-auto h-12 w-12 opacity-80" />
+          <div className="font-medium text-lg">Verification email sent</div>
+          <div className="text-muted-foreground m-auto max-w-lg text-balance">
+            Thanks for your comment! Please check your email to verify and publish your comment.
+            If you don't see it in your inbox within a few minutes, please check your spam folder.
           </div>
         </AlertDescription>
       </Alert>
@@ -128,19 +128,22 @@ export function CommentForm({ slug, config, onSuccess }: CommentFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
-        <div className="grid gap-4 sm:grid-cols-2">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        <div className="grid gap-5 sm:grid-cols-2">
           <FormField
             control={form.control}
             name="author"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel className="flex items-center gap-1.5">
+                  <User className="h-3.5 w-3.5 text-muted-foreground" />
+                  Name
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Your name"
                     {...field}
-                    className="focus-visible:ring-inset"
+                    className="focus-visible:ring-1 focus-visible:ring-inset transition-shadow"
                   />
                 </FormControl>
                 <FormMessage />
@@ -152,12 +155,15 @@ export function CommentForm({ slug, config, onSuccess }: CommentFormProps) {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="flex items-center gap-1.5">
+                  <Mail className="h-3.5 w-3.5 text-muted-foreground" />
+                  Email
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="email"
                     placeholder="you@example.com"
-                    className="focus-visible:ring-inset"
+                    className="focus-visible:ring-1 focus-visible:ring-inset transition-shadow"
                     {...field}
                   />
                 </FormControl>
@@ -173,12 +179,15 @@ export function CommentForm({ slug, config, onSuccess }: CommentFormProps) {
             name="url"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Website (optional)</FormLabel>
+                <FormLabel className="flex items-center gap-1.5">
+                  <LinkIcon className="h-3.5 w-3.5 text-muted-foreground" />
+                  Website (optional)
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="url"
                     placeholder="https://example.com"
-                    className="focus-visible:ring-inset"
+                    className="focus-visible:ring-1 focus-visible:ring-inset transition-shadow"
                     {...field}
                   />
                 </FormControl>
@@ -193,11 +202,14 @@ export function CommentForm({ slug, config, onSuccess }: CommentFormProps) {
           name="content"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Comment</FormLabel>
+              <FormLabel className="flex items-center gap-1.5">
+                <MessageSquare className="h-3.5 w-3.5 text-muted-foreground" />
+                Your comment
+              </FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Share your thoughts..."
-                  className="min-h-[120px] resize-y focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-offset-0"
+                  className="min-h-[120px] resize-y focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-offset-0 transition-shadow"
                   {...field}
                 />
               </FormControl>
@@ -211,15 +223,16 @@ export function CommentForm({ slug, config, onSuccess }: CommentFormProps) {
             control={form.control}
             name="allowEmailUsage"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md">
+              <FormItem className="flex items-start space-x-3 space-y-0 rounded-md p-4 border bg-muted/20">
                 <FormControl>
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
+                    className="mt-1"
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel className="text-sm font-normal">
+                  <FormLabel className="text-sm font-normal leading-relaxed">
                     {config.signUpMessage}
                   </FormLabel>
                 </div>
@@ -228,9 +241,23 @@ export function CommentForm({ slug, config, onSuccess }: CommentFormProps) {
           />
         )}
 
-        <div className="flex items-center justify-between pt-2">
-          <Button type="submit" disabled={form.formState.isSubmitting}>
-            Post Comment
+        <div className="flex items-center justify-end pt-2">
+          <Button
+            type="submit"
+            disabled={isLoading || form.formState.isSubmitting}
+            className="relative group"
+          >
+            {(isLoading || form.formState.isSubmitting) ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              <>
+                Post Comment
+                <Send className="h-3.5 w-3.5 ml-2 transition-transform group-hover:translate-x-0.5" />
+              </>
+            )}
           </Button>
         </div>
       </form>

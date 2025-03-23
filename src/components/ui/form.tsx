@@ -24,6 +24,66 @@ type FormFieldContextValue<
   name: TName
 }
 
+export interface FormSectionProps extends React.HTMLAttributes<HTMLDivElement> {
+  title?: string;
+  description?: string;
+}
+
+const FormSection = React.forwardRef<HTMLDivElement, FormSectionProps>(
+  ({ className, title, description, children, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn("space-y-4 rounded-lg border p-4", className)}
+        {...props}
+      >
+        {title && <h3 className="text-lg font-medium">{title}</h3>}
+        {description && <p className="text-sm text-muted-foreground">{description}</p>}
+        {children}
+      </div>
+    );
+  }
+);
+FormSection.displayName = "FormSection";
+
+export interface FormGridProps extends React.HTMLAttributes<HTMLDivElement> {
+  columns?: 1 | 2 | 3 | 4;
+  gap?: 'sm' | 'md' | 'lg';
+}
+
+const FormGrid = React.forwardRef<HTMLDivElement, FormGridProps>(
+  ({ className, columns = 2, gap = 'md', children, ...props }, ref) => {
+    const gapStyles = {
+      sm: 'gap-2',
+      md: 'gap-4',
+      lg: 'gap-6'
+    };
+
+    const columnStyles = {
+      1: 'grid-cols-1',
+      2: 'grid-cols-1 md:grid-cols-2',
+      3: 'grid-cols-1 md:grid-cols-3',
+      4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+    };
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "grid",
+          columnStyles[columns],
+          gapStyles[gap],
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+FormGrid.displayName = "FormGrid";
+
 const FormFieldContext = React.createContext<FormFieldContextValue>(
   {} as FormFieldContextValue
 )
@@ -146,25 +206,29 @@ const FormMessage = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, children, ...props }, ref) => {
-  const { error, formMessageId } = useFormField()
-  const body = error ? String(error?.message) : children
+   const { error, formMessageId } = useFormField();
+  const body = error ? String(error?.message) : children;
 
   if (!body) {
-    return null
+    return null;
   }
 
   return (
     <p
       ref={ref}
       id={formMessageId}
-      className={cn("text-sm font-medium text-destructive", className)}
+      className={cn(
+        "flex items-center gap-1.5 text-sm font-medium text-destructive",
+        className
+      )}
       {...props}
     >
+      {error && <AlertCircle className="h-3.5 w-3.5" />}
       {body}
     </p>
-  )
-})
-FormMessage.displayName = "FormMessage"
+  );
+});
+FormMessage.displayName = "FormMessage";
 
 export {
   useFormField,

@@ -5,11 +5,26 @@ import { cn } from "@/lib/utils";
 import { ButtonProps, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
-const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
+export interface PaginationProps extends React.ComponentProps<"nav"> {
+  variant?: "default" | "compact";
+}
+
+
+
+
+const Pagination = ({
+  className,
+  variant = "default",
+  ...props
+}: PaginationProps) => (
   <nav
     role="navigation"
     aria-label="pagination"
-    className={cn("mx-auto flex w-full justify-center", className)}
+    className={cn(
+      "mx-auto flex w-full justify-center",
+      variant === "compact" && "md:hidden",
+      className
+    )}
     {...props}
   />
 );
@@ -53,6 +68,8 @@ const PaginationLink = ({
         variant: isActive ? "outline" : "ghost",
         size,
       }),
+      isActive && "bg-primary/10 border-primary font-medium pointer-events-none",
+      "transition-all duration-200 hover:scale-105",
       className
     )}
     {...props}
@@ -115,4 +132,5 @@ export {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+
 };
