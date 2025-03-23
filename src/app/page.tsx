@@ -43,7 +43,7 @@ export default async function Page(
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
 
   // Fetch one additional post if on first page for the featured post
-  const postsToFetch = page === 1 ? 7 : 6;
+  const postsToFetch = page === 1 ? 5 : 4;
 
   const result = await wisp.getPosts({
     limit: postsToFetch,
@@ -69,7 +69,11 @@ export default async function Page(
 
         {/* Featured Post Section */}
         {featuredPost && (
-          <section className="mb-16">
+                    <Link
+                      href={`/post/${featuredPost.slug}`}
+                      className="hover:text-primary transition-colors"
+                    >
+          <section className="mb-16 hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer group rounded-xl overflow-hidden border shadow-sm bg-background/50">
             <h2 className="sr-only">Featured Post</h2>
             <div className="rounded-xl overflow-hidden border shadow-sm bg-background/50">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
@@ -132,18 +136,18 @@ export default async function Page(
                       </span>
                     </div>
 
-                    <Link
-                      href={`/post/${featuredPost.slug}`}
+                    <p
                       className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
                     >
                       Read more
                       <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-                    </Link>
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </section>
+                    </Link>
         )}
 
         {/* Latest Posts Section */}
@@ -192,35 +196,7 @@ export default async function Page(
           query={searchParams?.query}
         />
 
-        {/* Newsletter Section */}
-        {!searchParams?.query && page === 1 && (
-          <section className="my-16">
-            <div className="rounded-xl bg-muted/30 border p-8 md:p-12 text-center">
-              <h2 className="text-2xl font-bold tracking-tight mb-4">
-                Subscribe to our newsletter
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
-                Stay updated with our latest articles, news, and insights. We'll send you a curated selection of our best content, delivered straight to your inbox.
-              </p>
-              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                />
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-                >
-                  Subscribe
-                </button>
-              </form>
-              <p className="text-xs text-muted-foreground mt-4">
-                By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.
-              </p>
-            </div>
-          </section>
-        )}
+
       </div>
     </main>
   );
