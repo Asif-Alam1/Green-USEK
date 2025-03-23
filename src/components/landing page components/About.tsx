@@ -9,6 +9,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import Link from "next/link";
 
 const AboutUsSection: React.FC = () => {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -270,9 +271,9 @@ const AboutUsSection: React.FC = () => {
             simply want to make a difference, there's a place for you in our
             community.
           </p>
-          <button className="bg-white text-green-800 hover:bg-green-100 font-bold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg transform hover:scale-105">
+          <Link href='/#contact' className="bg-white text-green-800 hover:bg-green-100 font-bold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg transform hover:scale-105">
             Get Involved
-          </button>
+          </Link>
         </div>
       </div>
     </div>

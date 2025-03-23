@@ -7,6 +7,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+     "./public/pictures/**/*.png",
   ],
   theme: {
   	extend: {
@@ -80,7 +81,11 @@ const config: Config = {
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+          'gradient-x': 'gradient-x 10s ease infinite',
+    'float': 'float 6s ease-in-out infinite',
+    'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
+    'wave': 'wave 12s linear infinite',
   		}
   	}
   },

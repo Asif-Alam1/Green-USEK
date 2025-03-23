@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ArrowRight, ChevronDown } from "lucide-react";
+import Link from "next/link";
 
 const HeroSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -95,13 +96,13 @@ const HeroSection: React.FC = () => {
                 : "translate-y-12 opacity-0"
             }`}
           >
-            <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 group">
+            <Link href='/#contact' className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 group">
               <span>Get Involved</span>
               <ArrowRight className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
-            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-4 px-8 rounded-full border border-white/20 hover:border-white/40 transition-all duration-300">
+            </Link>
+            <Link href='https://www.instagram.com/green.usek/' target="_blank" className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-4 px-8 rounded-full border border-white/20 hover:border-white/40 transition-all duration-300">
               Learn More
-            </button>
+            </Link>
           </div>
         </div>
 
