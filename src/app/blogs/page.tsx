@@ -59,8 +59,8 @@ export default async function Page(props: {
 
   return (
     <div>
-      <div className="mt-5 mx-auto max-w-6xl">
-        <FilterBar active="latest" className="my-8" />
+      <div className=" mx-auto max-w-6xl">
+        <FilterBar active="latest" className="my-8 mt-28" />
 
         {/* Featured Post Section */}
         {featuredPost && (

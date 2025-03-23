@@ -281,7 +281,7 @@ export const Navbar = () => {
               />
 
               {/* Active indicator */}
-              {(pathname.includes('/category') || pathname.includes('/post')) && (
+              {(pathname.includes('/category') || pathname.includes('/post')) || pathname.includes('/blogs') && (
                 <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-green-300 to-green-400" />
               )}
 
@@ -513,9 +513,9 @@ export const Navbar = () => {
 
               {/* Blog section */}
               <Link
-                href="/category/latest"
+                href="/blogs"
                 className={`flex items-center space-x-3 px-4 py-4 rounded-xl text-lg
-                  ${pathname.includes('/category') || pathname.includes('/post')
+                  ${pathname.includes('/category') || pathname.includes('/post') ||pathname.includes('/blogs')
                     ? 'bg-green-700/30 text-white font-semibold'
                     : 'text-green-50 hover:bg-green-700/20'}
                   transform transition-all duration-300 ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}

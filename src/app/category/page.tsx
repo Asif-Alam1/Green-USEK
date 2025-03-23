@@ -80,16 +80,9 @@ export default async function CategoriesPage() {
 
   return (
     <>
-      <FullWidthHeader
-        title="Categories"
-        description="Browse all content by category to find exactly what you're looking for"
-        breadcrumb={[
-          { label: "Home", href: "/" },
-          { label: "Categories", href: "/category/" },
-        ]}
-      />
 
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
+
+      <div className="container mx-auto px-4 py-12 max-w-6xl mt-28">
         {/* Popular categories section */}
         <section className="mb-16">
           <div className="flex items-center gap-2 mb-6">

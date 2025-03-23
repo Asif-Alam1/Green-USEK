@@ -103,16 +103,10 @@ export const BlogContent = ({
 
   return (
     <>
-      <FullWidthHeader
-        title={title}
-        description=""
-        breadcrumb={[
-          { label: "Home", href: "/" },
-          { label: title, href: "" },
-        ]}
-      />
 
-      <article className="container mx-auto pt-8 pb-16 px-4 max-w-6xl">
+
+      <article className="container mx-auto pt-8 pb-16 px-4 max-w-6xl mt-28">
+        <h1 className="text-4xl font-bold tracking-tight mb-6 lg:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-green-600">{title}</h1>
         {/* Author and metadata section */}
         <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
           <div className="flex items-center gap-3">

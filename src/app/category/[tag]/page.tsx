@@ -114,11 +114,7 @@ export default async function CategoryPage(
 
     return (
       <>
-        <FullWidthHeader
-          title={label}
-          description={description}
-          breadcrumb={breadcrumb}
-        />
+
         <div className="container mx-auto max-w-6xl px-4 pb-16">
           {/* Category metadata display */}
 
@@ -134,7 +130,7 @@ export default async function CategoryPage(
                 </Link>
               )}
             </div>
-            <FilterBar active={tag} />
+            <FilterBar active={tag} className="mt-28 " />
           </div>
 
           {/* Post listing section */}
