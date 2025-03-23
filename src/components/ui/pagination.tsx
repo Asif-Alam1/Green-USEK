@@ -132,5 +132,5 @@ export {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-  PaginationJump
+
 };
