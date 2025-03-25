@@ -33,7 +33,7 @@ const HeroSection: React.FC = () => {
       <div
         className="absolute inset-0 w-full h-full bg-cover bg-center transform transition-transform duration-1000 ease-out"
         style={{
-          backgroundImage: "url('/pictures/sections-bck.jpg')",
+          backgroundImage: "url('/pictures/hero-bg.jpg')",
           transform: scrolled ? "scale(1.05)" : "scale(1)",
         }}
       />
@@ -61,13 +61,13 @@ const HeroSection: React.FC = () => {
                 : "translate-y-12 opacity-0"
             }`}
           >
-            <span className="text-5xl md:text-7xl lg:text-9xl bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-green-100">
+            <span className="text-3xl md:text-5xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-green-100">
               Green Usek
             </span>
           </h1>
 
           <h2
-            className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-tight max-w-3xl transform transition-all duration-1000 delay-200 ease-out ${
+            className={`text-xl md:text-3xl lg:text-4xl font-bold leading-tight max-w-3xl transform transition-all duration-1000 delay-200 ease-out ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-12 opacity-0"
@@ -78,7 +78,7 @@ const HeroSection: React.FC = () => {
           </h2>
 
           <p
-            className={`text-lg md:text-xl text-gray-200 max-w-2xl transform transition-all duration-1000 delay-300 ease-out ${
+            className={`text-md md:text-xl text-gray-200 max-w-2xl transform transition-all duration-1000 delay-300 ease-out ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-12 opacity-0"
@@ -122,9 +122,9 @@ const HeroSection: React.FC = () => {
 
             {/* Floating logo with glow effect */}
             <div className="relative animate-float">
-              <div className="absolute inset-0 bg-green-500/20 rounded-full blur-xl transform scale-110"></div>
+              <div className="absolute inset-0 bg-green-500/10 rounded-full blur-xl transform scale-110"></div>
               <img
-                src="/pictures/earth green_prev_ui.png"
+                src="/pictures/earth no bg.png"
                 alt="Green USEK Logo"
                 className="relative z-10 max-w-full  drop-shadow-2xl"
               />
