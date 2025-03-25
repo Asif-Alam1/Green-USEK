@@ -135,7 +135,7 @@ const ContactFormSection: React.FC = () => {
     <div
     id="contact"
       ref={sectionRef}
-      className="py-16 w-full flex justify-center bg-gradient-to-b from-white to-green-50"
+      className="pt-16 w-full flex justify-center bg-gradient-to-b from-green-100 to-white"
     >
       <div className="flex flex-col justify-center w-11/12 lg:w-9/12 space-y-12">
         {/* Header with animated reveal */}

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import type { GetPostsResult } from "@wisp-cms/client";
@@ -15,7 +15,7 @@ export interface BlogPostListProps {
 export const BlogPostList = ({
   posts,
   className,
-  variant = "grid"
+  variant = "grid",
 }: BlogPostListProps) => {
   // Function to estimate reading time based on description length
   const estimateReadTime = (text: string | null): number => {
@@ -29,7 +29,7 @@ export const BlogPostList = ({
   const getInitials = (name: string): string => {
     return name
       .split(" ")
-      .map(part => part[0])
+      .map((part) => part[0])
       .join("")
       .toUpperCase()
       .substring(0, 2);
@@ -46,12 +46,14 @@ export const BlogPostList = ({
   };
 
   return (
-    <div className={cn(
-      variant === "grid"
-        ? "grid grid-cols-1 gap-8 sm:gap-12 md:grid-cols-2 lg:gap-12"
-        : "space-y-12",
-      className
-    )}>
+    <div
+      className={cn(
+        variant === "grid"
+          ? "grid grid-cols-1 gap-8 sm:gap-4 md:grid-cols-2 lg:gap-6"
+          : "space-y-12",
+        className
+      )}
+    >
       {posts.map((post) => (
         <article
           className="group relative flex flex-col overflow-hidden rounded-lg border bg-background transition-all duration-200 hover:shadow-md"
@@ -75,7 +77,7 @@ export const BlogPostList = ({
                   priority={false}
                   onLoad={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.previousElementSibling?.classList.add('hidden');
+                    target.previousElementSibling?.classList.add("hidden");
                   }}
                 />
               ) : (
@@ -87,7 +89,7 @@ export const BlogPostList = ({
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   onLoad={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.previousElementSibling?.classList.add('hidden');
+                    target.previousElementSibling?.classList.add("hidden");
                   }}
                 />
               )}
@@ -100,7 +102,11 @@ export const BlogPostList = ({
             <div className="mb-3 flex items-center justify-between text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <Calendar className="h-3.5 w-3.5" />
-                <time dateTime={new Date(post.publishedAt || post.createdAt).toISOString()}>
+                <time
+                  dateTime={new Date(
+                    post.publishedAt || post.createdAt
+                  ).toISOString()}
+                >
                   {formatFullDate(post.publishedAt || post.createdAt)}
                 </time>
               </div>
@@ -112,7 +118,10 @@ export const BlogPostList = ({
 
             {/* Title */}
             <h2 className="mb-3 font-sans font-semibold tracking-tight text-2xl group-hover:text-primary transition-colors duration-200">
-              <Link href={`/post/${post.slug}`} className="after:absolute after:inset-0">
+              <Link
+                href={`/post/${post.slug}`}
+                className="after:absolute after:inset-0"
+              >
                 {post.title}
               </Link>
             </h2>
@@ -138,7 +147,11 @@ export const BlogPostList = ({
                 ) : (
                   <div
                     className="flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium"
-                    style={{ backgroundColor: stringToColor(post.author.name || "Unknown") }}
+                    style={{
+                      backgroundColor: stringToColor(
+                        post.author.name || "Unknown"
+                      ),
+                    }}
                     aria-label={post.author.name || "Unknown author"}
                   >
                     {getInitials(post.author.name || "Unknown")}

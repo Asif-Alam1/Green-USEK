@@ -51,7 +51,7 @@ const HeroSection: React.FC = () => {
       ></div>
 
       {/* Main content */}
-      <div className="relative mt-[130px] xl:mt-0 flex flex-col md:flex-row w-11/12 lg:w-9/12 z-10">
+      <div className="relative mt-[130px] xl:mt-0 flex flex-col md:flex-row w-11/12 lg:w-9/12 max-w-[1500px]  z-10">
         {/* Left Content with staggered animations */}
         <div className="flex-1  text-white space-y-6">
           <h1
@@ -96,11 +96,18 @@ const HeroSection: React.FC = () => {
                 : "translate-y-12 opacity-0"
             }`}
           >
-            <Link href='/#contact' className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 group">
+            <Link
+              href="/#contact"
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 group"
+            >
               <span>Get Involved</span>
               <ArrowRight className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-            <Link href='https://www.instagram.com/green.usek/' target="_blank" className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-4 px-8 rounded-full border border-white/20 hover:border-white/40 transition-all duration-300">
+            <Link
+              href="https://www.instagram.com/green.usek/"
+              target="_blank"
+              className="bg-white/10 flex items-center justify-center backdrop-blur-sm hover:bg-white/20 text-white font-bold py-4 px-8 rounded-full border border-white/20 hover:border-white/40 transition-all duration-300"
+            >
               Learn More
             </Link>
           </div>
@@ -134,7 +141,7 @@ const HeroSection: React.FC = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-10  transform -translate-x-1/2 animate-bounce">
+      <div className="hidden md:block absolute bottom-10  transform -translate-x-1/2 animate-bounce">
         <div className="flex flex-col items-center text-white space-y-2">
           <span className="text-sm font-medium">Scroll Down</span>
           <ChevronDown className="h-6 w-6" />

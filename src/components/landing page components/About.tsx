@@ -96,7 +96,7 @@ const AboutUsSection: React.FC = () => {
   const parallaxFactor = 0.1; // Adjust this value to control the parallax intensity
 
   return (
-    <div className="py-16 w-full flex justify-center bg-gradient-to-t from-green-100 to-green-50">
+    <div className="py-16 w-full flex justify-center bg-gradient-to-b from-green-100 to-white">
       <div className="flex flex-col justify-center w-11/12 lg:w-9/12 space-y-16">
         {/* Header with animated reveal */}
         <div
